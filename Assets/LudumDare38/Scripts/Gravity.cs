@@ -15,6 +15,6 @@ public class Gravity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_gravity.force = (Vector3.zero - this.transform.position).normalized;
+        m_gravity.force = (Vector3.zero - this.transform.position).normalized * 10 * Time.deltaTime;
     }
 }
