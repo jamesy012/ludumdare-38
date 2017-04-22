@@ -22,11 +22,11 @@ public class Storm : BaseDisaster
         InhabitantCheck();
 
         //if dragged outwards from planet
-        if (m_grabbed && m_CurrDistToPlanetPos > m_OldDistToPlanetPos && m_OldDistToPlanetPos != 0.0f)
+        if (m_grabbed )
         {
-            float distance = m_CurrDistToPlanetPos - m_OldDistToPlanetPos;
-            this.transform.Translate(this.transform.up * distance * Time.deltaTime);
-            m_heightRisen += distance * Time.deltaTime;
+            
+            this.transform.Translate(this.transform.up  * Time.deltaTime);
+            m_heightRisen += 1 * Time.deltaTime;
         }
 
         //if passed death threshold self destroy

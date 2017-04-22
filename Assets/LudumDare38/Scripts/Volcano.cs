@@ -19,8 +19,6 @@ public class Volcano : BaseDisaster
     void Start()
     {
 
-        //get peak of collider;
-        eruptPosition = this.transform.position + this.transform.up * m_eruptionPointOffset;
     }
 
     // Update is called once per frame
@@ -37,11 +35,15 @@ public class Volcano : BaseDisaster
         }
 
         //if grabbed and dragged towards planet
-        if(m_grabbed && m_CurrDistToPlanetPos < m_OldDistToPlanetPos && m_CurrDistToPlanetPos != 0.0f)
+ 
+        //Vector3 dragged = this. ;
+        
+
+        if(m_grabbed)
         {
-            float distance =  m_OldDistToPlanetPos - m_CurrDistToPlanetPos;
-            this.transform.Translate(-this.transform.up *  distance * Time.deltaTime);
-            m_heightSunk += distance * Time.deltaTime;
+           
+            this.transform.Translate(-transform.up * Time.deltaTime);
+            m_heightSunk += 1 * Time.deltaTime;
         }
 
         //if passed death threshold self destroy
