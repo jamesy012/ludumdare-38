@@ -5,8 +5,8 @@ using UnityEngine;
 public class BaseDisaster : MonoBehaviour
 {
  
-    protected Collider2D m_collider;
-    protected Rigidbody2D m_rigidBody;
+    //protected Collider m_collider;
+    //protected Rigidbody m_rigidBody;
 
 	/// <summary>
 	/// position where the user clicked
@@ -38,8 +38,7 @@ public class BaseDisaster : MonoBehaviour
     void Start()
     {
        
-        m_collider = this.GetComponent<Collider2D>();
-        m_rigidBody = this.GetComponent<Rigidbody2D>();
+     
     }
 
     // Update is called once per frame

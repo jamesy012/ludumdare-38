@@ -11,10 +11,18 @@ public class MeteorDisaster : BaseDisaster {
 	public float m_MaxHoldTime = 0.3f;
 
 	private Vector2 m_ClickPos;
+    private ConstantForce m_gravity;
+    private Rigidbody m_rigidBody;
 
-	// Update is called once per frame
-	void Update() {
-		if (m_grabbed) {
+    private void Start()
+    {
+        m_rigidBody = this.GetComponent<Rigidbody>();
+        m_gravity = this.GetComponent<ConstantForce>();
+    }
+    // Update is called once per frame
+    void Update() {
+		if (m_grabbed)
+        {
 
 			if (Time.time > m_ClickTime + m_MaxHoldTime) {
 				m_ClickTime = Time.time - m_MaxHoldTime;//make the time calculation = 0
@@ -24,6 +32,10 @@ public class MeteorDisaster : BaseDisaster {
 			}
 
 		}
+        else
+        {
+            m_gravity.force = ( Vector3.zero - this.transform.position).normalized;
+        }
 	}
 
 	protected override void clicked() {
@@ -65,7 +77,7 @@ public class MeteorDisaster : BaseDisaster {
 		m_rigidBody.AddForce(force);
 	}
 
-	public void OnTriggerExit2D(Collider2D collision) {
+	public void OnTriggerExit(Collider collision) {
 		if (collision.transform.tag == "Planet") {
 			Destroy(gameObject);
 		}
