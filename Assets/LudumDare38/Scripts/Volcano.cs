@@ -10,14 +10,15 @@ public class Volcano : BaseDisaster
     public float m_eruptionForce = 100.0f;
     public float m_eruptionPointOffset = 0.5f;
     public float m_scaleIntervalDenominator = 10.0f;
+    public float m_deathHeightOffset = 0.05f;
     public uint m_numOfRocks = 1;
     private Vector3 eruptPosition;
     private float m_scaleInterval = 0.0f;
+    private float m_heightSunk = 0.0f;
 
     // Use this for initialization
     void Start()
     {
-
         m_scaleInterval = this.transform.localScale.y / m_scaleIntervalDenominator;
         //get peak of collider;
         eruptPosition = this.transform.position + this.transform.up * m_eruptionPointOffset;
@@ -31,12 +32,20 @@ public class Volcano : BaseDisaster
 
         if(m_timer >= m_eruptInterval)
         {
-            Squash(m_scaleInterval);
+            //Squash(m_scaleInterval);
             Erupt();
             m_timer = 0.0f;
         }
 
-        if(this.transform.localScale.y <= 0.0f)
+        if(m_grabbed && m_CurrDistToPlanetPos < m_OldDistToPlanetPos)
+        {
+            float distance =  m_OldDistToPlanetPos - m_CurrDistToPlanetPos;
+            this.transform.Translate(-this.transform.up *  distance * Time.deltaTime);
+            m_heightSunk += distance * Time.deltaTime;
+        }
+
+        
+        if(m_heightSunk >= m_deathHeightOffset)
         {
             SelfDestruct();
         }
@@ -66,10 +75,6 @@ public class Volcano : BaseDisaster
 
 
 
-    private void Squash(float a_sqaushAmount)
-    {
-        this.transform.localScale -= this.transform.up * a_sqaushAmount;
-    }
 
     private void SelfDestruct()
     {

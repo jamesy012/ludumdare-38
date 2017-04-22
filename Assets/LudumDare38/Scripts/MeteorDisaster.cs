@@ -18,6 +18,6 @@ public class MeteorDisaster : BaseDisaster {
 	}
 
 	protected override void clicked() {
-		m_LastPosition = m_DownClickPosition;
+		m_LastPosition = m_CurrMousePosition;
 	}
 }
