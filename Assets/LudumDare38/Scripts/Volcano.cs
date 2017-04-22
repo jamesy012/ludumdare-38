@@ -9,17 +9,16 @@ public class Volcano : BaseDisaster
     public float m_eruptInterval = 2.0f;
     public float m_eruptionForce = 100.0f;
     public float m_eruptionPointOffset = 0.5f;
-    public float m_scaleIntervalDenominator = 10.0f;
     public float m_deathHeightOffset = 0.05f;
     public uint m_numOfRocks = 1;
     private Vector3 eruptPosition;
-    private float m_scaleInterval = 0.0f;
+
     private float m_heightSunk = 0.0f;
 
     // Use this for initialization
     void Start()
     {
-        m_scaleInterval = this.transform.localScale.y / m_scaleIntervalDenominator;
+
         //get peak of collider;
         eruptPosition = this.transform.position + this.transform.up * m_eruptionPointOffset;
     }
