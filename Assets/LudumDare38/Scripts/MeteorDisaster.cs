@@ -12,6 +12,10 @@ public class MeteorDisaster : BaseDisaster {
 
 	private Vector2 m_ClickPos;
 
+	void Start() {
+
+	}
+
 	// Update is called once per frame
 	void Update() {
 		if (m_grabbed) {
