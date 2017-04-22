@@ -32,6 +32,10 @@ public class Volcano : BaseDisaster
             m_timer = 0.0f;
         }
 
+        if(this.transform.localScale.y <= 0.0f)
+        {
+            SelfDestruct();
+        }
     }
 
     private void Erupt()
