@@ -11,17 +11,17 @@ public class BaseDisaster : MonoBehaviour
 	/// <summary>
 	/// position where the user clicked
 	/// </summary>
-	protected Vector3 m_CurrMousePosition;
+	protected Vector2 m_CurrMousePosition;
 
     /// <summary>
     /// prev mouse position
     /// </summary>
-    protected Vector3 m_OldMousePosition;
+    protected Vector2 m_OldMousePosition;
 
     /// <summary>
     /// position where the user clicked
     /// </summary>
-    protected Vector3 m_DownStartPosition;
+    protected Vector2 m_DownStartPosition;
 
     /// <summary>
     /// Distance to Planet
@@ -32,11 +32,6 @@ public class BaseDisaster : MonoBehaviour
     /// Prev distance to planet
     /// </summary>
     public float m_OldDistToPlanetPos = 0.0f;
-
-    /// <summary>
-    /// Drag direction
-    /// </summary>
-    protected Vector3 dragDirection;
 
 	public bool m_grabbed = false;
     // Use this for initialization
@@ -61,10 +56,10 @@ public class BaseDisaster : MonoBehaviour
 
 
 
-      
-       
+        m_OldMousePosition = getCurrentClickPosition();
+        m_CurrMousePosition = getCurrentClickPosition();
         m_DownStartPosition = transform.position;
-
+        m_CurrDistToPlanetPos = Vector2.Distance(Vector3.zero, m_CurrMousePosition);
 
 
 
@@ -73,16 +68,20 @@ public class BaseDisaster : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        m_CurrMousePosition = getCurrentClickPosition();
+        m_OldDistToPlanetPos = m_CurrDistToPlanetPos;
+        m_OldMousePosition = m_CurrMousePosition;
 
-        dragDirection = (m_DownStartPosition - m_CurrMousePosition).normalized;
+        m_CurrMousePosition = getCurrentClickPosition();
+        m_CurrDistToPlanetPos = Vector2.Distance(Vector3.zero, m_CurrMousePosition);
+
   
     }
 
     private void OnMouseUp()
     {
 
-        dragDirection = Vector3.zero;
+        m_OldDistToPlanetPos = 0.0f;
+        m_CurrDistToPlanetPos = 0.0f;
         m_grabbed = false;
     }
 
@@ -96,7 +95,7 @@ public class BaseDisaster : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    protected Vector3 getCurrentClickPosition() {
+    protected Vector2 getCurrentClickPosition() {
 		//might need to be different for phone
 		//also might want to convert to world coord instead of screen coord?
 		return Input.mousePosition;

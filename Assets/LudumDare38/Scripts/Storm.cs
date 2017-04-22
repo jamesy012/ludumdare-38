@@ -22,11 +22,11 @@ public class Storm : BaseDisaster
         InhabitantCheck();
 
         //if dragged outwards from planet
-        if (m_grabbed )
+        if (m_grabbed && m_CurrDistToPlanetPos > m_OldDistToPlanetPos && m_OldDistToPlanetPos != 0.0f)
         {
-            
-            this.transform.Translate(this.transform.up  * Time.deltaTime);
-            m_heightRisen += 1 * Time.deltaTime;
+            float distance = m_CurrDistToPlanetPos - m_OldDistToPlanetPos;
+            this.transform.Translate(Vector3.up * distance * Time.deltaTime);
+            m_heightRisen += distance * Time.deltaTime;
         }
 
         //if passed death threshold self destroy
@@ -46,7 +46,7 @@ public class Storm : BaseDisaster
     {
         RaycastHit hit;
         Debug.DrawRay(this.transform.position, -this.transform.up, Color.blue);
-        if (Physics.Raycast(transform.position, -this.transform.up, out hit, 4.0f))
+        if (Physics.Raycast(transform.position, -this.transform.up, out hit, 10.0f))
         {
             if(hit.collider.CompareTag("Inhabitant"))
             {
