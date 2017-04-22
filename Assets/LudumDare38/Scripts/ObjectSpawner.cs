@@ -82,7 +82,7 @@ public class ObjectSpawner : MonoBehaviour {
 
 		go.transform.parent = m_ParentTransform;
 
-		
+
 	}
 
 	/// <summary>
@@ -92,5 +92,15 @@ public class ObjectSpawner : MonoBehaviour {
 		m_LastSpawnTime = Time.time;
 
 		m_SpawnTime = Random.Range(m_MinTimer, m_MaxTimer);
+	}
+
+	public void OnDrawGizmosSelected() {
+		Gizmos.color = Color.red;
+
+		for (int i = 0; i < 8; i++) {
+			float rot = (i / 8.0f) * 360.0f;
+			Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, rot));
+			Gizmos.DrawSphere(rotation * Vector3.up * m_SpawnDistance, 0.25f);
+		}
 	}
 }

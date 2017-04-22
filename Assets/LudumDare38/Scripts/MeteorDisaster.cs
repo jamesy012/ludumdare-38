@@ -10,19 +10,25 @@ public class MeteorDisaster : BaseDisaster {
 	private float m_ClickTime = 0;
 	public float m_MaxHoldTime = 0.3f;
 
+	public float m_StartingForce = 5.0f;
+
 	private Vector2 m_ClickPos;
 
-    private Rigidbody m_rigidBody;
+	private Rigidbody m_rigidBody;
 
-    private void Start()
-    {
-        m_rigidBody = this.GetComponent<Rigidbody>();
+	private void Start() {
+		m_rigidBody = this.GetComponent<Rigidbody>();
 
-    }
-    // Update is called once per frame
-    void Update() {
-		if (m_grabbed)
-        {
+		Vector2 startForce;
+		startForce.x = Random.Range(0.0f, m_StartingForce);
+		startForce.y = Random.Range(0.0f, m_StartingForce);
+
+		m_rigidBody.AddForce(startForce);
+
+	}
+	// Update is called once per frame
+	void Update() {
+		if (m_grabbed) {
 
 			if (Time.time > m_ClickTime + m_MaxHoldTime) {
 				m_ClickTime = Time.time - m_MaxHoldTime;//make the time calculation = 0
@@ -77,6 +83,14 @@ public class MeteorDisaster : BaseDisaster {
 	public void OnTriggerExit(Collider collision) {
 		if (collision.transform.tag == "Planet") {
 			Destroy(gameObject);
+		}
+	}
+
+	public void OnCollisionEnter(Collision collision) {
+		//todo spwan particles or do something else during collision
+		if (collision.transform.tag == "Disaster") {
+			Destroy(gameObject);
+			Destroy(collision.gameObject);
 		}
 	}
 }
