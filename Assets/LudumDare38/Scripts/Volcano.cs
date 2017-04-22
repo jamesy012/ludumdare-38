@@ -22,10 +22,12 @@ public class Volcano : BaseDisaster
     // Update is called once per frame
     void Update()
     {
+        eruptPosition = this.transform.position + this.transform.up * m_eruptionPointOffset;
         m_timer += Time.deltaTime;
 
         if(m_timer >= m_eruptInterval)
         {
+            Squash(1);
             Erupt();
             m_timer = 0.0f;
         }
@@ -42,7 +44,7 @@ public class Volcano : BaseDisaster
         for(uint i = 0; i< m_numOfRocks; ++i)
         {
             //create new lava rock
-            GameObject newLavaRock = Instantiate(m_lavaRock, eruptPosition, Quaternion.identity);
+            GameObject newLavaRock = Instantiate(m_lavaRock, eruptPosition, Quaternion.identity, this.transform);
 
             Rigidbody2D rb = newLavaRock.GetComponent<Rigidbody2D>();
 
@@ -52,5 +54,18 @@ public class Volcano : BaseDisaster
         }
 
 
+    }
+
+
+
+    private void Squash(float a_sqaushAmount)
+    {
+        this.transform.localScale -= this.transform.up * a_sqaushAmount;
+        this.transform.localPosition -= this.transform.up * Time.deltaTime;
+    }
+
+    private void SelfDestruct()
+    {
+        Destroy(this.gameObject);
     }
 }
