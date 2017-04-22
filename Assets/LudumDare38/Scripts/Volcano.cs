@@ -38,7 +38,7 @@ public class Volcano : BaseDisaster
         /*&& m_CurrDistToPlanetPos < m_OldDistToPlanetPos && m_CurrDistToPlanetPos != 0.0f*/
         if (m_grabbed)
         {
-            float distance =  m_OldDistToPlanetPos - m_CurrDistToPlanetPos;
+           
             this.transform.Translate(-Vector3.up  * Time.deltaTime);
             m_heightSunk += 1 * Time.deltaTime;
         }
@@ -62,11 +62,11 @@ public class Volcano : BaseDisaster
             //create new lava rock
             GameObject newLavaRock = Instantiate(m_lavaRock, eruptPosition, Quaternion.identity);
 
-            Rigidbody2D rb = newLavaRock.GetComponent<Rigidbody2D>();
+            Rigidbody rb = newLavaRock.GetComponent<Rigidbody>();
 
             Vector3 rockDirection = this.transform.up + Random.Range(-1.0f, 1.0f) * this.transform.right;
             //launch rock
-            rb.AddForce(rockDirection.normalized * m_eruptionForce * Time.deltaTime, ForceMode2D.Impulse);
+            rb.AddForce(rockDirection.normalized * m_eruptionForce * Time.deltaTime, ForceMode.Impulse);
         }
 
 

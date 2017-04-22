@@ -25,7 +25,7 @@ public class Storm : BaseDisaster
         /*&& m_CurrDistToPlanetPos > m_OldDistToPlanetPos && m_OldDistToPlanetPos != 0.0f*/
         if (m_grabbed )
         {
-            float distance = m_CurrDistToPlanetPos - m_OldDistToPlanetPos;
+            
             this.transform.Translate(Vector3.up  * Time.deltaTime);
             m_heightRisen += 1 * Time.deltaTime;
         }
