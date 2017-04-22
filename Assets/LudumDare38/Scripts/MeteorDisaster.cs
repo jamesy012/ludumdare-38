@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class MeteorDisaster : BaseDisaster {
 
-	private Vector2 m_LastPosition;
-	
-	// Update is called once per frame
-	void Update () {
-		if (m_grabbed) {
-			Vector2 currPosition = getCurrentClickPosition();
-			Vector2 difference = currPosition - m_LastPosition;
-			m_LastPosition = currPosition;
+	public float m_MaxThrowSpeed = 10;
 
-			m_rigidBody.AddForce(difference);
+	// Update is called once per frame
+	void Update() {
+		if (m_grabbed) {
+
+			Vector2 mousePos = Camera.main.ScreenToWorldPoint(m_CurrMousePosition);
+
+			Vector2 difference = mousePos - (Vector2)transform.position;
+
+			float speed = m_MaxThrowSpeed / difference.magnitude;
+
+			m_rigidBody.AddForce(difference * speed);
 		}
 	}
 
-	protected override void clicked() {
-		m_LastPosition = m_CurrMousePosition;
-	}
+	//public void OnMouseExit() {
+	//	if (m_grabbed) {
+	//		m_grabbed = false;
+	//	}
+	//}
 }
