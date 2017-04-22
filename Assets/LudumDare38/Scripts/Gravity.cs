@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class LavaRock : MonoBehaviour
+[RequireComponent(typeof(ConstantForce))]
+public class Gravity : MonoBehaviour
 {
+    
     private ConstantForce m_gravity;
     // Use this for initialization
     void Start()

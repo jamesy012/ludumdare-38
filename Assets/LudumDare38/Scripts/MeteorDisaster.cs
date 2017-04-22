@@ -11,13 +11,13 @@ public class MeteorDisaster : BaseDisaster {
 	public float m_MaxHoldTime = 0.3f;
 
 	private Vector2 m_ClickPos;
-    private ConstantForce m_gravity;
+
     private Rigidbody m_rigidBody;
 
     private void Start()
     {
         m_rigidBody = this.GetComponent<Rigidbody>();
-        m_gravity = this.GetComponent<ConstantForce>();
+
     }
     // Update is called once per frame
     void Update() {
@@ -32,10 +32,7 @@ public class MeteorDisaster : BaseDisaster {
 			}
 
 		}
-        else
-        {
-            m_gravity.force = ( Vector3.zero - this.transform.position).normalized;
-        }
+
 	}
 
 	protected override void clicked() {
