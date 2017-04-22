@@ -89,7 +89,12 @@ public class BaseDisaster : MonoBehaviour
 
 	}
 
-	protected Vector2 getCurrentClickPosition() {
+
+    protected void SelfDestruct()
+    {
+        Destroy(this.gameObject);
+    }
+    protected Vector2 getCurrentClickPosition() {
 		//might need to be different for phone
 		//also might want to convert to world coord instead of screen coord?
 		return Input.mousePosition;

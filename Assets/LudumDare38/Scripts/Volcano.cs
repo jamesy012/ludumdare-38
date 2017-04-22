@@ -31,19 +31,20 @@ public class Volcano : BaseDisaster
 
         if(m_timer >= m_eruptInterval)
         {
-            //Squash(m_scaleInterval);
+  
             Erupt();
             m_timer = 0.0f;
         }
 
-        if(m_grabbed && m_CurrDistToPlanetPos < m_OldDistToPlanetPos)
+        //if grabbed and dragged towards planet
+        if(m_grabbed && m_CurrDistToPlanetPos < m_OldDistToPlanetPos && m_CurrDistToPlanetPos != 0.0f)
         {
             float distance =  m_OldDistToPlanetPos - m_CurrDistToPlanetPos;
             this.transform.Translate(-this.transform.up *  distance * Time.deltaTime);
             m_heightSunk += distance * Time.deltaTime;
         }
 
-        
+        //if passed death threshold self destroy
         if(m_heightSunk >= m_deathHeightOffset)
         {
             SelfDestruct();
@@ -75,8 +76,5 @@ public class Volcano : BaseDisaster
 
 
 
-    private void SelfDestruct()
-    {
-        Destroy(this.gameObject);
-    }
+
 }
