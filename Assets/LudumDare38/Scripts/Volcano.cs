@@ -7,8 +7,8 @@ public class Volcano : BaseDisaster
     public GameObject m_lavaRock;
     float m_timer = 0.0f;
     public float m_eruptInterval = 2.0f;
-    public float m_eruptionForce = 10.0f;
-    public float m_eruptionPointOffset = 6.0f;
+    public float m_eruptionForce = 100.0f;
+    public float m_eruptionPointOffset = 0.5f;
     public uint m_numOfRocks = 1;
     private Vector3 eruptPosition;
     // Use this for initialization
