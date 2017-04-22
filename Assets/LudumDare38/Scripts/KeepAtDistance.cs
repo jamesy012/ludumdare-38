@@ -12,6 +12,9 @@ public class KeepAtDistance : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if(m_ObjectToOrbit == null) {
+			return;
+		}
 		Vector3 position;
 
 		if (m_UseRotation) {

@@ -12,15 +12,11 @@ public class MeteorDisaster : BaseDisaster {
 
 	private Vector2 m_ClickPos;
 
-	void Start() {
-
-	}
-
 	// Update is called once per frame
 	void Update() {
 		if (m_grabbed) {
 
-			if(Time.time > m_ClickTime + m_MaxHoldTime) {
+			if (Time.time > m_ClickTime + m_MaxHoldTime) {
 				m_ClickTime = Time.time - m_MaxHoldTime;//make the time calculation = 0
 				releaceFling();
 			} else {
@@ -67,5 +63,11 @@ public class MeteorDisaster : BaseDisaster {
 		Vector2 force = difference * a_Speed * timeLeft;
 
 		m_rigidBody.AddForce(force);
+	}
+
+	public void OnTriggerExit2D(Collider2D collision) {
+		if (collision.transform.tag == "Planet") {
+			Destroy(gameObject);
+		}
 	}
 }
