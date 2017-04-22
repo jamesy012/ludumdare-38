@@ -46,7 +46,7 @@ public class Storm : BaseDisaster
     {
         RaycastHit hit;
         Debug.DrawRay(this.transform.position, -this.transform.up, Color.blue);
-        if (Physics.Raycast(transform.position, -this.transform.up, out hit, 10.0f))
+        if (Physics.Raycast(transform.position, -this.transform.up, out hit, 4.0f))
         {
             if(hit.collider.CompareTag("Inhabitant"))
             {
