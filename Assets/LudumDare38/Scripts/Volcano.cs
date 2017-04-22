@@ -67,7 +67,7 @@ public class Volcano : BaseDisaster
 
             Vector3 rockDirection = this.transform.up + Random.Range(-1.0f, 1.0f) * this.transform.right;
             //launch rock
-            rb.AddForce(rockDirection * m_eruptionForce * Time.deltaTime, ForceMode2D.Impulse);
+            rb.AddForce(rockDirection.normalized * m_eruptionForce * Time.deltaTime, ForceMode2D.Impulse);
         }
 
 
