@@ -4,25 +4,64 @@ using UnityEngine;
 
 public class MeteorDisaster : BaseDisaster {
 
-	public float m_MaxThrowSpeed = 10;
+	public float m_MaxThrowSpeed = 500;
+	public float m_NormalThrowSpeed = 50;
+
+	private float m_ClickTime = 0;
+	public float m_MaxHoldTime = 0.3f;
+
+	private Vector2 m_ClickPos;
 
 	// Update is called once per frame
 	void Update() {
 		if (m_grabbed) {
 
-			Vector2 mousePos = Camera.main.ScreenToWorldPoint(m_CurrMousePosition);
+			if(Time.time > m_ClickTime + m_MaxHoldTime) {
+				m_ClickTime = Time.time - m_MaxHoldTime;//make the time calculation = 0
+				releaceFling();
+			} else {
+				//flingMeteor(m_NormalThrowSpeed);
+			}
 
-			Vector2 difference = mousePos - (Vector2)transform.position;
-
-			float speed = m_MaxThrowSpeed / difference.magnitude;
-
-			m_rigidBody.AddForce(difference * speed);
 		}
 	}
 
-	//public void OnMouseExit() {
-	//	if (m_grabbed) {
-	//		m_grabbed = false;
-	//	}
-	//}
+	protected override void clicked() {
+		m_ClickTime = Time.time;
+		m_ClickPos = getWorldPosOfMouse();
+	}
+
+	public void OnMouseExit() {
+		if (m_grabbed) {
+
+			releaceFling();
+		}
+	}
+
+	private void releaceFling() {
+		flingMeteor(m_MaxThrowSpeed);
+
+		m_grabbed = false;
+	}
+
+	private Vector2 getWorldPosOfMouse() {
+		return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+	}
+
+	private void flingMeteor(float a_Speed) {
+
+		float timeLeft = ((m_ClickTime + m_MaxHoldTime) - Time.time) / m_MaxHoldTime;
+
+		timeLeft = Mathf.Max(timeLeft, 0.5f);//make sure it's not 0
+
+		Vector2 mousePos = getWorldPosOfMouse();
+
+		Vector2 difference = mousePos - m_ClickPos;
+
+		//float speed = m_MaxThrowSpeed / difference.magnitude;
+
+		Vector2 force = difference * a_Speed * timeLeft;
+
+		m_rigidBody.AddForce(force);
+	}
 }
