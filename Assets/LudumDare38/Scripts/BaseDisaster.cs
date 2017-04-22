@@ -69,7 +69,8 @@ public class BaseDisaster : MonoBehaviour
     private void OnMouseDrag()
     {
         m_OldDistToPlanetPos = m_CurrDistToPlanetPos;
-       
+        m_OldMousePosition = m_CurrMousePosition;
+
         m_CurrMousePosition = getCurrentClickPosition();
         m_CurrDistToPlanetPos = Vector2.Distance(Vector3.zero, m_CurrMousePosition);
 
@@ -78,6 +79,9 @@ public class BaseDisaster : MonoBehaviour
 
     private void OnMouseUp()
     {
+
+        m_OldDistToPlanetPos = 0.0f;
+        m_CurrDistToPlanetPos = 0.0f;
         m_grabbed = false;
     }
 
