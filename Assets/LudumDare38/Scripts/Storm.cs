@@ -51,6 +51,7 @@ public class Storm : BaseDisaster
             if(hit.collider.CompareTag("Inhabitant"))
             {
                 LightningBolt();
+                GameObject.Destroy(hit.collider.gameObject);
             }
         }
             
