@@ -44,7 +44,7 @@ public class Volcano : BaseDisaster
         for(uint i = 0; i< m_numOfRocks; ++i)
         {
             //create new lava rock
-            GameObject newLavaRock = Instantiate(m_lavaRock, eruptPosition, Quaternion.identity, this.transform);
+            GameObject newLavaRock = Instantiate(m_lavaRock, eruptPosition, Quaternion.identity);
 
             Rigidbody2D rb = newLavaRock.GetComponent<Rigidbody2D>();
 
