@@ -24,7 +24,7 @@ public class KeepAtDistance : MonoBehaviour {
 	}
 
 	public Vector3 getDistancePosition() {
-		return transform.rotation * (m_ObjectToOrbit.up * distance);
+		return transform.rotation * (Vector3.up * distance) + m_ObjectToOrbit.position;
 	}
 
 	public static Vector3 getDistancePosition(Vector3 a_Position, Transform a_OrbitTransform, float a_Distance) {
@@ -34,10 +34,10 @@ public class KeepAtDistance : MonoBehaviour {
 	}
 
 	public static Vector3 getDistancePosition(Quaternion a_RotationAround, Transform a_OrbitTransform, float a_Distance) {
-		return a_RotationAround * (a_OrbitTransform.up * a_Distance);
+		return a_RotationAround * (Vector3.up * a_Distance) + a_OrbitTransform.position;
 	}
 
 	public static Vector3 getDistancePosition(Transform a_Object, Transform a_OrbitTransform, float a_Distance) {
-		return a_Object.rotation * (a_OrbitTransform.up * a_Distance);
+		return a_Object.rotation * (Vector3.up * a_Distance) + a_OrbitTransform.position;
 	}
 }
