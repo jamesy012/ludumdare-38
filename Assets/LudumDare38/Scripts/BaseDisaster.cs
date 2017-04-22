@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class BaseDisaster : MonoBehaviour
 {
-    private Collider2D m_collider;
-    private Rigidbody2D m_rigidBody;
-    public bool m_grabbed = false;
+    protected Collider2D m_collider;
+    protected Rigidbody2D m_rigidBody;
+
+	/// <summary>
+	/// position where the user clicked
+	/// </summary>
+	protected Vector2 m_DownClickPosition;
+	/// <summary>
+	/// position where the user clicked
+	/// </summary>
+	protected Vector2 m_DownStartPosition;
+
+	public bool m_grabbed = false;
     // Use this for initialization
     void Start()
     {
@@ -26,6 +36,10 @@ public class BaseDisaster : MonoBehaviour
     {
         m_grabbed = true;
 
+		m_DownClickPosition = Input.mousePosition;
+		m_DownStartPosition = transform.position;
+
+		clicked();
     }
 
     private void OnMouseUp()
@@ -33,8 +47,15 @@ public class BaseDisaster : MonoBehaviour
         m_grabbed = false;
     }
 
-   
+	protected virtual void clicked() {
 
+	}
+
+	protected Vector2 getCurrentClickPosition() {
+		//might need to be different for phone
+		//also might want to convert to world coord instead of screen coord?
+		return Input.mousePosition;
+	}
     
 
 }
