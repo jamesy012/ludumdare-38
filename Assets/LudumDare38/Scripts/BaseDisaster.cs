@@ -56,10 +56,10 @@ public class BaseDisaster : MonoBehaviour
 
 
 
-        m_OldMousePosition = getCurrentClickPosition();
+        m_OldMousePosition = m_CurrMousePosition;
         m_CurrMousePosition = getCurrentClickPosition();
         m_DownStartPosition = transform.position;
-        m_CurrDistToPlanetPos = Vector2.Distance(Vector3.zero, m_CurrMousePosition);
+  
 
 
 
@@ -72,7 +72,7 @@ public class BaseDisaster : MonoBehaviour
         m_OldMousePosition = m_CurrMousePosition;
 
         m_CurrMousePosition = getCurrentClickPosition();
-        m_CurrDistToPlanetPos = Vector2.Distance(Vector3.zero, m_CurrMousePosition);
+        m_CurrDistToPlanetPos = Mathf.Abs(Vector2.Distance(Vector3.zero, m_CurrMousePosition));
 
   
     }

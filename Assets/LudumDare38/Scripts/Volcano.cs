@@ -35,11 +35,12 @@ public class Volcano : BaseDisaster
         }
 
         //if grabbed and dragged towards planet
-        if(m_grabbed && m_CurrDistToPlanetPos < m_OldDistToPlanetPos && m_CurrDistToPlanetPos != 0.0f)
+        /*&& m_CurrDistToPlanetPos < m_OldDistToPlanetPos && m_CurrDistToPlanetPos != 0.0f*/
+        if (m_grabbed)
         {
             float distance =  m_OldDistToPlanetPos - m_CurrDistToPlanetPos;
-            this.transform.Translate(-Vector3.up *  distance * Time.deltaTime);
-            m_heightSunk += distance * Time.deltaTime;
+            this.transform.Translate(-Vector3.up  * Time.deltaTime);
+            m_heightSunk += 1 * Time.deltaTime;
         }
 
         //if passed death threshold self destroy
