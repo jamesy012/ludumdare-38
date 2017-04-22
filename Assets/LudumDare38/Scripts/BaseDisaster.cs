@@ -36,7 +36,7 @@ public class BaseDisaster : MonoBehaviour
     {
         m_grabbed = true;
 
-		m_DownClickPosition = Input.mousePosition;
+		m_DownClickPosition = getCurrentClickPosition();
 		m_DownStartPosition = transform.position;
 
 		clicked();
