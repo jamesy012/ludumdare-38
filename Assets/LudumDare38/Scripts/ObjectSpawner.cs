@@ -86,7 +86,7 @@ public class ObjectSpawner : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// updates the last spawn time and also updates the random SpawnTime
+	/// updates the LastSpawnTime and also updates the random SpawnTime
 	/// </summary>
 	public void updateLastSpawn() {
 		m_LastSpawnTime = Time.time;
