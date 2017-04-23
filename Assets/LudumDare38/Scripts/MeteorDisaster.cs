@@ -31,15 +31,20 @@ public class MeteorDisaster : BaseDisaster {
 	// Update is called once per frame
 	void Update() {
 		if (m_grabbed) {
+            
+           
+            if (Time.time > m_ClickTime + m_MaxHoldTime)
+            {
+                m_ClickTime = Time.time - m_MaxHoldTime;//make the time calculation = 0
+                releaceFling();
+            }
+            else
+            {
+                //this.transform.position = getWorldPosOfMouse();
+            }
 
-			if (Time.time > m_ClickTime + m_MaxHoldTime) {
-				m_ClickTime = Time.time - m_MaxHoldTime;//make the time calculation = 0
-				releaceFling();
-			} else {
-				//flingMeteor(m_NormalThrowSpeed);
-			}
+        }
 
-		}
 
 	}
 
@@ -67,8 +72,9 @@ public class MeteorDisaster : BaseDisaster {
 	}
 
 	private void flingMeteor(float a_Speed) {
+        m_rigidBody.velocity = Vector3.zero;
 
-		float timeLeft = ((m_ClickTime + m_MaxHoldTime) - Time.time) / m_MaxHoldTime;
+        float timeLeft = ((m_ClickTime + m_MaxHoldTime) - Time.time) / m_MaxHoldTime;
 
 		timeLeft = Mathf.Max(timeLeft, 0.5f);//make sure it's not 0
 
