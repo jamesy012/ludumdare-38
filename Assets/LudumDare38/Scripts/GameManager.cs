@@ -9,6 +9,12 @@ public class GameManager : MonoBehaviour
 	private bool m_HitGameOver = false;
 
 	private string m_InhabitantTransformHolderName = "Inhabitants";
+
+	/// <summary>
+	/// list of objects to disable on game over
+	/// </summary>
+	public GameObject[] m_ObjectToDisableOnGo;
+
 	// Use this for initialization
 	void Start()
     {

@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Storm : BaseDisaster
+public class Storm : Clouds
 {
-    public float m_orbitSpeed = 10.0f;
 
-	/// <summary>
-	/// deviation for the speed, to give each cloud their own individuality/personalty  
-	/// </summary>
-	public float m_OrbitSpeedDeviation = 5.0f;
 
     public float m_deathHeightOffset = 0.5f;
     private float m_heightRisen = 0.0f;
@@ -17,24 +12,22 @@ public class Storm : BaseDisaster
 	public float m_HitCooldown = 4;
 	private float m_LastHit;
 
-	public bool m_MoveRight = false;
+
 
     // Use this for initialization
-    void Start()
+    protected override void Start()
     {
-		if(Random.Range(0,100) > 50) {
-			m_MoveRight = true;
-		}
+		base.Start();
 
-		m_OrbitSpeedDeviation = Random.Range(-m_OrbitSpeedDeviation, m_OrbitSpeedDeviation);
+		//start cooldown from spawn time
+		m_LastHit = Time.time;
 	}
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-
-
-        Orbit();
+		Orbit();
+		moveUpDown();     
 		if (Time.time > m_LastHit + m_HitCooldown) {
 			InhabitantCheck();
 		}
@@ -83,17 +76,5 @@ public class Storm : BaseDisaster
         }
             
     }
-
-    //orbit planet
-    private void Orbit()
-    {
-		float speed = (m_orbitSpeed + m_OrbitSpeedDeviation) * Time.deltaTime;
-		if (m_MoveRight) {
-			speed *= -1;
-		}
-        this.transform.RotateAround(Vector3.zero, Vector3.forward, speed);
-    }
-
-
 
 }
