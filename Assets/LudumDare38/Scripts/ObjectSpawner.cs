@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,15 +16,47 @@ public class ObjectSpawner : MonoBehaviour {
 	/// </summary>
 	public Transform m_ParentTransform;
 
+	[Header("__Timers")]
+	/// <summary>
+	/// amount of time it will
+	/// </summary>
+	public float m_TimeToGetToMaxTimers = 180.0f;
+
+	/// <summary>
+	/// min times for spawning
+	/// these are the starting values for minmax
+	/// </summary>
+	public float m_StartingMinTimer, m_StartingMaxTimer;
+	/// <summary>
+	/// max times for spawning
+	/// these are the quickened times
+	/// the min/max timer will be this after 
+	/// </summary>
+	public float m_DesiredMinTimer, m_DesiredMaxTimer;
+
+	/// <summary>
+	/// starting time of script
+	/// </summary>
+	private float m_StartTime;
+
+	/// <summary>
+	/// a flag to check if the min and max timers have hit their end
+	/// </summary>
+	private bool m_HitEndOfSpawnSpeedTimer = false;
+
 	/// <summary>
 	/// picks a random number between these two numbers
+	/// updated to be the lerp between the other 4 min/max variables
 	/// </summary>
-	public float m_MinTimer, m_MaxTimer;
+	//[SerializeField] // show in inspector
+	private float m_MinTimer, m_MaxTimer;
 
 	/// <summary>
 	/// random value between m_MinTimer and m_MaxTimer
 	/// </summary>
 	private float m_SpawnTime;
+
+	[Header("__Spawn Options")]
 
 	/// <summary>
 	/// distance at which to spawn at
@@ -42,14 +75,42 @@ public class ObjectSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		if (m_MinTimer >= m_MaxTimer) {
+		if (m_StartingMinTimer >= m_StartingMaxTimer || m_DesiredMinTimer >= m_DesiredMaxTimer) {
 			Debug.LogWarning("Min timer is higher then max timer in Spawner " + transform.name);
 		}
 
+
+		//set up spawn timers
+		if(m_StartingMaxTimer == 0 || m_StartingMaxTimer == 0 || m_DesiredMinTimer == 0 || m_DesiredMinTimer == 0) {
+			Debug.LogWarning("One of the timers, min or max times are not set, using defaults. " + transform.name);
+			m_HitEndOfSpawnSpeedTimer = true;
+			m_MinTimer = 5;
+			m_MaxTimer = 10;
+		}
+
+		m_StartTime = Time.time;
+		updateMinMax();
+
+		//set up next spawn
 		updateLastSpawn();
 
 		//let it spawn from the start of play
-		m_SpawnTime = Random.Range(0, m_MaxTimer);
+		m_SpawnTime = UnityEngine.Random.Range(0, m_MaxTimer);
+	}
+
+	private void updateMinMax() {
+		if (m_HitEndOfSpawnSpeedTimer) {
+			return;
+		}
+		float time = (Time.time - m_StartTime) / m_TimeToGetToMaxTimers;
+
+		m_MinTimer = Mathf.Lerp(m_StartingMinTimer, m_DesiredMinTimer, time);
+		m_MaxTimer = Mathf.Lerp(m_StartingMaxTimer, m_DesiredMaxTimer, time);
+
+		if (time > 1) {
+			m_HitEndOfSpawnSpeedTimer = true;
+		}
+
 	}
 
 	// Update is called once per frame
@@ -58,6 +119,7 @@ public class ObjectSpawner : MonoBehaviour {
 			if (hasSpawnSlot()) {
 				spawnObject();
 			}
+			updateMinMax();
 			updateLastSpawn();
 		}
 	}
@@ -97,8 +159,8 @@ public class ObjectSpawner : MonoBehaviour {
 	/// </summary>
 	public void spawnObject() {
 
-		int objectIndex = Random.Range(0, m_ObjectsToSpwan.Length);
-		float spawnRotation = Random.Range(0.0f, 360.0f);
+		int objectIndex = UnityEngine.Random.Range(0, m_ObjectsToSpwan.Length);
+		float spawnRotation = UnityEngine.Random.Range(0.0f, 360.0f);
 		Quaternion rotation = Quaternion.Euler(0, 0, spawnRotation);
 
 		GameObject go = Instantiate(m_ObjectsToSpwan[objectIndex]);
@@ -116,7 +178,7 @@ public class ObjectSpawner : MonoBehaviour {
 	public void updateLastSpawn() {
 		m_LastSpawnTime = Time.time;
 
-		m_SpawnTime = Random.Range(m_MinTimer, m_MaxTimer);
+		m_SpawnTime = UnityEngine.Random.Range(m_MinTimer, m_MaxTimer);
 	}
 
 	public void OnDrawGizmosSelected() {
