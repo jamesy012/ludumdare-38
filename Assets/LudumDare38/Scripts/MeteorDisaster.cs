@@ -10,6 +10,8 @@ public class MeteorDisaster : BaseDisaster {
 	private float m_ClickTime = 0;
 	public float m_MaxHoldTime = 0.3f;
 
+    public GameObject m_explosionPrefab;
+
 	public float m_StartingForce = 5.0f;
 
 	private Vector2 m_ClickPos;
@@ -100,5 +102,7 @@ public class MeteorDisaster : BaseDisaster {
 	protected override void SelfDestruct() {
 		Destroy(this);
 		gameObject.AddComponent<DecreaseSizeDestroy>();
-	}
+        Instantiate(m_explosionPrefab, this.transform.position, Quaternion.identity);
+
+    }
 }
