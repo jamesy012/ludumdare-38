@@ -23,11 +23,5 @@ public class Explosion : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Inhabitant"))
-        {
-            GameObject.Destroy(other.gameObject);
-        }
-    }
+
 }

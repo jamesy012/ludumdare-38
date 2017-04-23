@@ -60,4 +60,6 @@ public class InhabitantBehavior : MonoBehaviour {
 			GameObject.Destroy(this.gameObject);
 		}
 	}
+
+
 }
