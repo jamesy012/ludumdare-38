@@ -35,6 +35,11 @@ public class ObjectSpawner : MonoBehaviour {
 	/// </summary>
 	private float m_LastSpawnTime;
 
+	/// <summary>
+	/// a counter that wont spawn a new 
+	/// </summary>
+	public uint m_MaxAmountSpawned = 0;
+
 	// Use this for initialization
 	void Start() {
 		if (m_MinTimer >= m_MaxTimer) {
@@ -42,12 +47,17 @@ public class ObjectSpawner : MonoBehaviour {
 		}
 
 		updateLastSpawn();
+
+		//let it spawn from the start of play
+		m_SpawnTime = Random.Range(0, m_MaxTimer);
 	}
 
 	// Update is called once per frame
 	void Update() {
 		if (checkSpawn()) {
-			spawnObject();
+			if (hasSpawnSlot()) {
+				spawnObject();
+			}
 			updateLastSpawn();
 		}
 	}
@@ -60,9 +70,24 @@ public class ObjectSpawner : MonoBehaviour {
 		//if last spawn + spawn time is less then time
 		//then you can spawn
 		if (m_LastSpawnTime + m_SpawnTime < Time.time) {
+
 			return true;
 		}
 		return false;
+	}
+
+	public bool hasSpawnSlot() {
+		if (m_ParentTransform != null && m_MaxAmountSpawned != 0) {
+			//if the max number of spawn able objects is more then the amount of children in the parent transform
+			if (m_MaxAmountSpawned > m_ParentTransform.childCount) {
+				return true;
+			}else {
+				return false;
+			}
+
+		} else {
+			return true;
+		}				
 	}
 
 	/// <summary>

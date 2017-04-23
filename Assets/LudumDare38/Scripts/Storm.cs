@@ -7,10 +7,15 @@ public class Storm : BaseDisaster
     public float m_orbitSpeed = 10.0f;
     public float m_deathHeightOffset = 0.5f;
     private float m_heightRisen = 0.0f;
+
+	public bool m_MoveRight = false;
+
     // Use this for initialization
     void Start()
     {
-
+		if(Random.Range(0,100) > 50) {
+			m_MoveRight = true;
+		}
     }
 
     // Update is called once per frame
@@ -61,7 +66,11 @@ public class Storm : BaseDisaster
     //orbit planet
     private void Orbit()
     {
-        this.transform.RotateAround(Vector3.zero, Vector3.forward, m_orbitSpeed*Time.deltaTime);
+		float speed = m_orbitSpeed * Time.deltaTime;
+		if (m_MoveRight) {
+			speed *= -1;
+		}
+        this.transform.RotateAround(Vector3.zero, Vector3.forward, speed);
     }
 
 
