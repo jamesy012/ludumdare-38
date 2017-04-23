@@ -96,6 +96,8 @@ public class MeteorDisaster : BaseDisaster {
 		}
 		if (collision.transform.tag == "Planet") {
 			SelfDestruct();
+			DecreaseSizeDestroy dsd = GetComponent<DecreaseSizeDestroy>();
+			dsd.m_TimeTakenToFadeOut = 0.2f;
 		}
 	}
 
