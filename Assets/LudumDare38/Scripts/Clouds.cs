@@ -57,4 +57,8 @@ public class Clouds : BaseDisaster {
 		}
 		this.transform.RotateAround(Vector3.zero, Vector3.forward, speed);
 	}
+
+	protected float getHeight() {
+		return Vector3.Distance(Vector3.zero, transform.position);
+	}
 }

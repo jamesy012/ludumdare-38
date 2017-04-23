@@ -51,12 +51,16 @@ public class InhabitantBehavior : MonoBehaviour {
 
 	public void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag("Disaster")) {
-			GameObject.Destroy(this.gameObject);
+			if (!other.isTrigger) {
+				GameObject.Destroy(this.gameObject);
+			}
 		}
 	}
 
 	private void OnCollisionEnter(Collision collision) {
+		print("cc " + collision.transform.name);
 		if (collision.gameObject.CompareTag("Disaster")) {
+			print("zz");
 			GameObject.Destroy(this.gameObject);
 		}
 	}

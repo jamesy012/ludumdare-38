@@ -12,6 +12,9 @@ public class Storm : Clouds
 	public float m_HitCooldown = 4;
 	private float m_LastHit;
 
+	public GameObject m_LightingBolt;
+
+	private float m_StartHeight;
 
 
     // Use this for initialization
@@ -21,6 +24,8 @@ public class Storm : Clouds
 
 		//start cooldown from spawn time
 		m_LastHit = Time.time;
+
+		m_StartHeight = getHeight();
 	}
 
     // Update is called once per frame
@@ -53,17 +58,26 @@ public class Storm : Clouds
     {
 		m_LastHit = Time.time;
 
-		//spawn lighting bolt prefab
-		//have that kill the inhabitant with it's collider
-
-		//kill inhabitant
+		if(m_LightingBolt != null) {
+			GameObject go = Instantiate(m_LightingBolt);
+			go.transform.parent = transform;
+			go.transform.position = transform.position;
+			go.transform.rotation = transform.rotation;
+			Vector3 scale = go.transform.GetChild(1).localScale;
+			scale.y = getHeight() / m_StartHeight;
+			go.transform.GetChild(1).localScale = scale;
+		}
 	}
 
     private void InhabitantCheck()
     {
         RaycastHit hit;
-        Debug.DrawRay(this.transform.position, -this.transform.up, Color.blue);
-        if (Physics.Raycast(transform.position, -this.transform.up, out hit, 10.0f))
+        Debug.DrawRay(this.transform.position, -this.transform.up * 10.0f, Color.blue);
+
+		int layerMask = 0;
+		layerMask = -LayerMask.NameToLayer("Inhabitant");
+
+        if (Physics.Raycast(transform.position, -this.transform.up, out hit, 10.0f, layerMask))
         {
             if(hit.collider.CompareTag("Inhabitant"))
             {
@@ -71,7 +85,7 @@ public class Storm : Clouds
 
 
 				LightningBolt();
-                GameObject.Destroy(hit.collider.gameObject);
+                //GameObject.Destroy(hit.collider.gameObject);
             }
         }
             
