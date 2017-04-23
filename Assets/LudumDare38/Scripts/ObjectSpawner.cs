@@ -75,13 +75,23 @@ public class ObjectSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
+
+	}
+
+	public void OnEnable() {
+		if(m_ParentTransform != null) {
+			for(int i = 0; i < m_ParentTransform.childCount; i++) {
+				Destroy(m_ParentTransform.GetChild(i).gameObject);
+			}
+		}
+
 		if (m_StartingMinTimer >= m_StartingMaxTimer || m_DesiredMinTimer >= m_DesiredMaxTimer) {
 			Debug.LogWarning("Min timer is higher then max timer in Spawner " + transform.name);
 		}
 
 
 		//set up spawn timers
-		if(m_StartingMaxTimer == 0 || m_StartingMaxTimer == 0 || m_DesiredMinTimer == 0 || m_DesiredMinTimer == 0) {
+		if (m_StartingMaxTimer == 0 || m_StartingMaxTimer == 0 || m_DesiredMinTimer == 0 || m_DesiredMinTimer == 0) {
 			Debug.LogWarning("One of the timers, min or max times are not set, using defaults. " + transform.name);
 			m_HitEndOfSpawnSpeedTimer = true;
 			m_MinTimer = 5;
@@ -143,13 +153,13 @@ public class ObjectSpawner : MonoBehaviour {
 			//if the max number of spawn able objects is more then the amount of children in the parent transform
 			if (m_MaxAmountSpawned > m_ParentTransform.childCount) {
 				return true;
-			}else {
+			} else {
 				return false;
 			}
 
 		} else {
 			return true;
-		}				
+		}
 	}
 
 	/// <summary>

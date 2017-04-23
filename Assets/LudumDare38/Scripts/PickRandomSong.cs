@@ -27,7 +27,8 @@ public class PickRandomSong : MonoBehaviour {
 		}
 	}
 
-	private void pickRandomSong() {
+	public void pickRandomSong() {
+		m_As.Stop();
 		m_As.clip = m_MusicClips[UnityEngine.Random.Range(0, m_MusicClips.Length)];
 		m_As.Play();
 	}
