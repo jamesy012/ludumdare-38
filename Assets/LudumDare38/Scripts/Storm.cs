@@ -8,6 +8,9 @@ public class Storm : BaseDisaster
     public float m_deathHeightOffset = 0.5f;
     private float m_heightRisen = 0.0f;
 
+	public float m_HitCooldown = 4;
+	private float m_LastHit;
+
 	public bool m_MoveRight = false;
 
     // Use this for initialization
@@ -24,7 +27,9 @@ public class Storm : BaseDisaster
 
 
         Orbit();
-        InhabitantCheck();
+		if (Time.time > m_LastHit + m_HitCooldown) {
+			InhabitantCheck();
+		}
 
         //if dragged outwards from planet
         /*&& m_CurrDistToPlanetPos > m_OldDistToPlanetPos && m_OldDistToPlanetPos != 0.0f*/
@@ -45,8 +50,13 @@ public class Storm : BaseDisaster
 
     private void LightningBolt()
     {
-        //kill inhabitant
-    }
+		m_LastHit = Time.time;
+
+		//spawn lighting bolt prefab
+		//have that kill the inhabitant with it's collider
+
+		//kill inhabitant
+	}
 
     private void InhabitantCheck()
     {
@@ -56,7 +66,10 @@ public class Storm : BaseDisaster
         {
             if(hit.collider.CompareTag("Inhabitant"))
             {
-                LightningBolt();
+				
+
+
+				LightningBolt();
                 GameObject.Destroy(hit.collider.gameObject);
             }
         }
