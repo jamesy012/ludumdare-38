@@ -6,10 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public int m_inhabitantCount = 0;
     private GameObject[] m_inhabitants;
+    private bool m_wasPopulated = false;
     // Use this for initialization
     void Start()
     {
-
+      
       m_inhabitants =  GameObject.FindGameObjectsWithTag("Inhabitant");
       m_inhabitantCount = m_inhabitants.Length;
     }
@@ -21,7 +22,12 @@ public class GameManager : MonoBehaviour
         m_inhabitants = GameObject.FindGameObjectsWithTag("Inhabitant");
         m_inhabitantCount = m_inhabitants.Length;
 
-        if(m_inhabitantCount <= 0)
+        if(m_inhabitantCount > 0)
+        {
+            m_wasPopulated = true;
+        }
+
+        if(m_inhabitantCount <= 0 && m_wasPopulated)
         {
             GameOver();
         }
@@ -29,6 +35,6 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
-
+        Debug.Log("GAME OVER");
     }
 }
