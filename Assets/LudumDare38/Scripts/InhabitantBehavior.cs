@@ -5,6 +5,10 @@ using UnityEngine;
 public class InhabitantBehavior : MonoBehaviour {
 
 	public float m_walkSpeed = 5.0f;
+	/// <summary>
+	/// how much speed will be randomly taken or added 
+	/// </summary>
+	public float m_WalkSpeedDeviation = 2.5f;
 
 	private bool m_MoveRight = true;
 
@@ -20,6 +24,8 @@ public class InhabitantBehavior : MonoBehaviour {
 		if (Random.Range(0, 2) == 0) {
 			m_MoveRight = false;
 		}
+
+		m_WalkSpeedDeviation = Random.Range(-m_WalkSpeedDeviation, m_WalkSpeedDeviation);
 	}
 
 	// Update is called once per frame
@@ -34,7 +40,7 @@ public class InhabitantBehavior : MonoBehaviour {
 	}
 
 	private void Walk() {
-		float speed = m_walkSpeed * Time.deltaTime;
+		float speed = (m_walkSpeed + m_WalkSpeedDeviation) * Time.deltaTime;
 		if (m_MoveRight) {
 			speed *= -1;
 		}
