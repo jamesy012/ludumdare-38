@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
 	public GameObject[] m_ObjectsToToggleOnPause;
 	public static bool m_Paused = false;
+	public static bool m_Muted = false;
 
 	// Use this for initialization
 	void Start()
@@ -131,5 +132,14 @@ public class GameManager : MonoBehaviour
 			m_ObjectsToToggleOnPause[i].SetActive(!m_ObjectsToToggleOnPause[i].activeInHierarchy);
 		}
 		m_Paused = !m_Paused;
+	}
+
+	public void muteButton() {
+		if (m_Muted) {
+			GetComponentInChildren<AudioSource>().UnPause();
+		} else {
+			GetComponentInChildren<AudioSource>().Pause();
+		}
+		m_Muted = !m_Muted;
 	}
 }
