@@ -10,7 +10,7 @@ public class MeteorDisaster : BaseDisaster {
 	private float m_ClickTime = 0;
 	public float m_MaxHoldTime = 0.3f;
 
-    public GameObject m_explosionPrefab;
+	public GameObject m_explosionPrefab;
 
 	public float m_StartingForce = 5.0f;
 
@@ -31,19 +31,16 @@ public class MeteorDisaster : BaseDisaster {
 	// Update is called once per frame
 	void Update() {
 		if (m_grabbed) {
-            
-           
-            if (Time.time > m_ClickTime + m_MaxHoldTime)
-            {
-                m_ClickTime = Time.time - m_MaxHoldTime;//make the time calculation = 0
-                releaceFling();
-            }
-            else
-            {
-                //this.transform.position = getWorldPosOfMouse();
-            }
 
-        }
+
+			if (Time.time > m_ClickTime + m_MaxHoldTime) {
+				m_ClickTime = Time.time - m_MaxHoldTime;//make the time calculation = 0
+				releaceFling();
+			} else {
+				//this.transform.position = getWorldPosOfMouse();
+			}
+
+		}
 
 
 	}
@@ -72,9 +69,9 @@ public class MeteorDisaster : BaseDisaster {
 	}
 
 	private void flingMeteor(float a_Speed) {
-        m_rigidBody.velocity = Vector3.zero;
+		m_rigidBody.velocity = Vector3.zero;
 
-        float timeLeft = ((m_ClickTime + m_MaxHoldTime) - Time.time) / m_MaxHoldTime;
+		float timeLeft = ((m_ClickTime + m_MaxHoldTime) - Time.time) / m_MaxHoldTime;
 
 		timeLeft = Mathf.Max(timeLeft, 0.5f);//make sure it's not 0
 
@@ -91,7 +88,10 @@ public class MeteorDisaster : BaseDisaster {
 
 	public void OnTriggerExit(Collider collision) {
 		if (collision.transform.tag == "Planet") {
-			Destroy(gameObject);
+			//have to use distance now instead due to 2nd collider being a trigger. so the meteor is easier to grab
+			if (Vector3.Distance(Vector3.zero, transform.position) > 10) {
+				Destroy(gameObject);
+			}
 		}
 	}
 
@@ -110,7 +110,7 @@ public class MeteorDisaster : BaseDisaster {
 	protected override void SelfDestruct() {
 		Destroy(this);
 		gameObject.AddComponent<DecreaseSizeDestroy>();
-        Instantiate(m_explosionPrefab, this.transform.position, Quaternion.identity);
+		Instantiate(m_explosionPrefab, this.transform.position, Quaternion.identity);
 
-    }
+	}
 }
