@@ -97,7 +97,7 @@ public class MeteorDisaster : BaseDisaster {
 
 	public void OnCollisionEnter(Collision collision) {
 		////todo spwan particles or do something else during collision
-		if (collision.transform.tag == "Disaster") {
+		if (collision.transform.tag == "Meteor") {
 			SelfDestruct();
 		}
 		if (collision.transform.tag == "Planet") {
