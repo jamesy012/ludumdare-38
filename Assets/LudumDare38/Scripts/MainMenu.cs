@@ -13,8 +13,8 @@ public class MainMenu : MonoBehaviour
 
     public void Endless()
     {
-
-    }
+		SceneManager.LoadScene(2);
+	}
 
     public void Credits()
     {
