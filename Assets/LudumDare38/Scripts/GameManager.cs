@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 	private bool m_HitGameOver = false;
 
 	private string m_InhabitantTransformHolderName = "Inhabitants";
-
+    public float m_timeSurvived = 0.0f;
 	/// <summary>
 	/// list of objects to disable on game over
 	/// </summary>
@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
+
 		if (m_HitGameOver) {
 			return;
 		}
@@ -57,6 +59,8 @@ public class GameManager : MonoBehaviour
 				m_wasPopulated = true;
 			}
 		}
+
+        m_timeSurvived += Time.deltaTime;
     }
 
     public void finishGame()
@@ -67,16 +71,22 @@ public class GameManager : MonoBehaviour
     }
 
 	public void startGame() {
+        
 		print("Game Start");
 		toggleObjects();
 		setUpGame();
 	}
 
+    public void exitGame()
+    {
+        Application.Quit();
+    }
+
 	private void setUpGame() {
 		m_HitGameOver = false;
 		m_wasPopulated = false;
-
-		m_RandomSongSelection.pickRandomSong();
+        m_timeSurvived = 0.0f;
+        m_RandomSongSelection.pickRandomSong();
 
 		for (int i = 0; i < m_InhabiantTransform.childCount; i++) {
 			Transform child = m_InhabiantTransform.GetChild(i);
