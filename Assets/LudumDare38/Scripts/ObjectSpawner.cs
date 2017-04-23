@@ -18,9 +18,9 @@ public class ObjectSpawner : MonoBehaviour {
 
 	[Header("__Timers")]
 	/// <summary>
-	/// amount of time it will
+	/// amount of time it will take to get from m_Starting timers to m_Desired Timers
 	/// </summary>
-	public float m_TimeToGetToMaxTimers = 180.0f;
+	public float m_TimeToGetToDesiredTimers = 180.0f;
 
 	/// <summary>
 	/// min times for spawning
@@ -102,7 +102,7 @@ public class ObjectSpawner : MonoBehaviour {
 		if (m_HitEndOfSpawnSpeedTimer) {
 			return;
 		}
-		float time = (Time.time - m_StartTime) / m_TimeToGetToMaxTimers;
+		float time = (Time.time - m_StartTime) / m_TimeToGetToDesiredTimers;
 
 		m_MinTimer = Mathf.Lerp(m_StartingMinTimer, m_DesiredMinTimer, time);
 		m_MaxTimer = Mathf.Lerp(m_StartingMaxTimer, m_DesiredMaxTimer, time);
