@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour
 
 	private PickRandomSong m_RandomSongSelection;
 
+	public bool m_EndlessMode = false;
+
+	public GameObject[] m_ObjectsToToggleOnPause;
+	public static bool m_Paused = false;
+
 	// Use this for initialization
 	void Start()
     {
@@ -41,6 +46,10 @@ public class GameManager : MonoBehaviour
 		if (m_HitGameOver) {
 			return;
 		}
+		if (m_EndlessMode) {
+			return;
+		}
+
 		if(m_InhabiantTransform == null) {
 			return;
 		}
@@ -110,5 +119,17 @@ public class GameManager : MonoBehaviour
 		for(int i = 0; i < m_ObjectToToggleOnGameOver.Length; i++) {
 			m_ObjectToToggleOnGameOver[i].SetActive(!m_ObjectToToggleOnGameOver[i].activeInHierarchy);
 		}
+	}
+
+	public void pause() {
+		if (m_Paused) {
+			Time.timeScale = 1.0f;
+		} else {
+			Time.timeScale = 0.0f;
+		}
+		for (int i = 0; i < m_ObjectsToToggleOnPause.Length; i++) {
+			m_ObjectsToToggleOnPause[i].SetActive(!m_ObjectsToToggleOnPause[i].activeInHierarchy);
+		}
+		m_Paused = !m_Paused;
 	}
 }
