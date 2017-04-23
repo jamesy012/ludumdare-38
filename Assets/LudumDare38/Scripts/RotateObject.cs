@@ -8,10 +8,16 @@ public class RotateObject : MonoBehaviour {
 	public Vector3 m_Axis = Vector3.forward;
 
 	public bool m_RandomStartRotation = true;
+	public bool m_RandomStartAxis = false;
+
+	public float m_RandomStartAxisScale = 1.0f;
 
 	void Start() {
 		if (m_RandomStartRotation) {
 			transform.Rotate(m_Axis * Random.Range(0.0f, 360.0f));
+		}
+		if (m_RandomStartAxis) {
+			m_Axis = Random.onUnitSphere * m_RandomStartAxisScale;
 		}
 	}
 

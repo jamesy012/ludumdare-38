@@ -34,6 +34,8 @@ public class BaseDisaster : MonoBehaviour
     public float m_OldDistToPlanetPos = 0.0f;
 
 	public bool m_grabbed = false;
+
+
     // Use this for initialization
     void Start()
     {
@@ -49,49 +51,57 @@ public class BaseDisaster : MonoBehaviour
 
     }
 
+
+	//danm functions have a range limit
+	//might need to change to ray cast, then check if it has this component
+	//and call clicked()
+
     private void OnMouseDown()
     {
-        m_grabbed = true;
-
-
-
-        m_OldMousePosition = m_CurrMousePosition;
-        m_CurrMousePosition = getCurrentClickPosition();
-        m_DownStartPosition = transform.position;
-  
-
-
-
         clicked();
     }
 
     private void OnMouseDrag()
     {
-        m_OldDistToPlanetPos = m_CurrDistToPlanetPos;
-        m_OldMousePosition = m_CurrMousePosition;
-
-        m_CurrMousePosition = getCurrentClickPosition();
-        m_CurrDistToPlanetPos = Mathf.Abs(Vector2.Distance(Vector3.zero, m_CurrMousePosition));
-
-  
+		drag();  
     }
 
     private void OnMouseUp()
     {
-
-        m_OldDistToPlanetPos = 0.0f;
-        m_CurrDistToPlanetPos = 0.0f;
-        m_grabbed = false;
+		released();
     }
 
 	protected virtual void clicked() {
+		m_grabbed = true;
+
+		m_OldMousePosition = m_CurrMousePosition;
+		m_CurrMousePosition = getCurrentClickPosition();
+		m_DownStartPosition = transform.position;
 
 	}
 
 
-    protected void SelfDestruct()
+	protected virtual void drag() {
+		m_OldDistToPlanetPos = m_CurrDistToPlanetPos;
+		m_OldMousePosition = m_CurrMousePosition;
+
+		m_CurrMousePosition = getCurrentClickPosition();
+		m_CurrDistToPlanetPos = Mathf.Abs(Vector2.Distance(Vector3.zero, m_CurrMousePosition));
+	}
+
+
+	protected virtual void released() {
+		m_OldDistToPlanetPos = 0.0f;
+		m_CurrDistToPlanetPos = 0.0f;
+		m_grabbed = false;
+	}
+
+
+	protected virtual void SelfDestruct()
     {
-        Destroy(this.gameObject);
+		//Destroy(this.gameObject);
+		Destroy(this);
+		gameObject.AddComponent<FadeOutDestroy>();
     }
 
     protected Vector2 getCurrentClickPosition() {

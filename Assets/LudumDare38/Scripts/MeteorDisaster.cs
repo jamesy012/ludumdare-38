@@ -42,6 +42,7 @@ public class MeteorDisaster : BaseDisaster {
 	}
 
 	protected override void clicked() {
+		base.clicked();
 		m_ClickTime = Time.time;
 		m_ClickPos = getWorldPosOfMouse();
 	}
@@ -87,10 +88,17 @@ public class MeteorDisaster : BaseDisaster {
 	}
 
 	public void OnCollisionEnter(Collision collision) {
-		//todo spwan particles or do something else during collision
+		////todo spwan particles or do something else during collision
 		if (collision.transform.tag == "Disaster") {
-			Destroy(gameObject);
-			Destroy(collision.gameObject);
+			SelfDestruct();
 		}
+		if (collision.transform.tag == "Planet") {
+			SelfDestruct();
+		}
+	}
+
+	protected override void SelfDestruct() {
+		Destroy(this);
+		gameObject.AddComponent<DecreaseSizeDestroy>();
 	}
 }
