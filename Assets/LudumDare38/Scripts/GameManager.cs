@@ -4,37 +4,47 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public int m_inhabitantCount = 0;
-    private GameObject[] m_inhabitants;
+	private Transform m_InhabiantTransform;
     private bool m_wasPopulated = false;
-    // Use this for initialization
-    void Start()
+	private bool m_HitGameOver = false;
+
+	private string m_InhabitantTransformHolderName = "Inhabitants";
+	// Use this for initialization
+	void Start()
     {
-      
-      m_inhabitants =  GameObject.FindGameObjectsWithTag("Inhabitant");
-      m_inhabitantCount = m_inhabitants.Length;
-    }
+
+		m_InhabiantTransform = GameObject.Find(m_InhabitantTransformHolderName).transform;
+
+		if(m_InhabiantTransform == null) {
+			Debug.LogError("CANT FIND TRANSFORM CALLED " + m_InhabitantTransformHolderName);
+		}
+
+	}
 
 
     // Update is called once per frame
     void Update()
     {
-        m_inhabitants = GameObject.FindGameObjectsWithTag("Inhabitant");
-        m_inhabitantCount = m_inhabitants.Length;
+		if(m_InhabiantTransform == null) {
+			return;
+		}
 
-        if(m_inhabitantCount > 0)
-        {
-            m_wasPopulated = true;
-        }
-
-        if(m_inhabitantCount <= 0 && m_wasPopulated)
-        {
-            GameOver();
-        }
+		if (m_wasPopulated) {
+			if(m_InhabiantTransform.childCount == 0) {
+				if (!m_HitGameOver) {
+					GameOver();
+				}
+			}
+		} else {
+			if(m_InhabiantTransform.childCount != 0) {
+				m_wasPopulated = true;
+			}
+		}
     }
 
-    void GameOver()
+    private void GameOver()
     {
+		m_HitGameOver = true;
         Debug.Log("GAME OVER");
     }
 }

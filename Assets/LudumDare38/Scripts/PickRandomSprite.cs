@@ -9,6 +9,11 @@ public class PickRandomSprite : MonoBehaviour {
 
 	private SpriteRenderer m_Sr;
 
+	/// <summary>
+	/// list of objects to disable
+	/// </summary>
+	public GameObject[] m_ObjectToDisableOnGo;
+
 	// Use this for initialization
 	void OnEnable () {
 
