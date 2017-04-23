@@ -34,6 +34,7 @@ public class FadeOutDestroy : MonoBehaviour {
 
 		if(m_Sr == null && m_IfNoSpriteRendererDestroyObject) {
 			Destroy(gameObject);
+			Debug.LogWarning("Object has no SpriteRenderer to fade out " + transform.name);
 			return;
 		}
 
