@@ -10,12 +10,14 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// score
     /// </summary>
-    public int m_score = 0;
+	[SerializeField]
+    private int m_score = 0;
 
-    /// <summary>
-    /// score multiplier
-    /// </summary>
-    public int m_scoreMultiplier = 1;
+	/// <summary>
+	/// score multiplier
+	/// </summary>
+	[SerializeField]
+	public int m_scoreMultiplier = 1;
 
 	private string m_InhabitantTransformHolderName = "Inhabitants";
     public float m_timeSurvived = 0.0f;
@@ -158,5 +160,20 @@ public class GameManager : MonoBehaviour
 
 	public void loadMainMenu() {
 		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+	}
+
+	public int getScore() {
+		return m_score;
+	}
+
+	public int getMultiplyer() {
+		return m_scoreMultiplier;
+	}
+
+	public void addScore(int a_Amount) {
+		m_score += a_Amount * getMultiplyer();
+		if(m_score <= 0) {
+			m_score = 0;
+		}
 	}
 }

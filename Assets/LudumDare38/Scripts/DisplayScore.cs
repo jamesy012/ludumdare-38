@@ -7,6 +7,9 @@ public class DisplayScore : MonoBehaviour
 {
     private GameManager m_gameManager;
     private Text m_scoreDisplay;
+
+	public string m_PrefixText = "Score: ";
+
     // Use this for initialization
     void Start()
     {
@@ -17,6 +20,6 @@ public class DisplayScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_scoreDisplay.text = "Score: " + m_gameManager.m_score.ToString();
+        m_scoreDisplay.text = m_PrefixText + m_gameManager.getScore();
     }
 }
