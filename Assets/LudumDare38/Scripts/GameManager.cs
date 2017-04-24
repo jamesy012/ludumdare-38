@@ -142,4 +142,8 @@ public class GameManager : MonoBehaviour
 		}
 		m_Muted = !m_Muted;
 	}
+
+	public void loadMainMenu() {
+		UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+	}
 }
