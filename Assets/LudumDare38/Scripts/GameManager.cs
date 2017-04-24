@@ -7,6 +7,15 @@ public class GameManager : MonoBehaviour
 	private Transform m_InhabiantTransform;
     private bool m_wasPopulated = false;
 	private bool m_HitGameOver = false;
+    /// <summary>
+    /// score
+    /// </summary>
+    public int m_score = 0;
+
+    /// <summary>
+    /// score multiplier
+    /// </summary>
+    public int m_scoreMultiplier = 1;
 
 	private string m_InhabitantTransformHolderName = "Inhabitants";
     public float m_timeSurvived = 0.0f;
@@ -42,9 +51,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
 
-		if (m_HitGameOver) {
+        m_scoreMultiplier = m_InhabiantTransform.childCount;
+
+        if (m_HitGameOver) {
 			return;
 		}
 		if (m_EndlessMode) {
