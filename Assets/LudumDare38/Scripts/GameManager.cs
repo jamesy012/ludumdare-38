@@ -113,6 +113,9 @@ public class GameManager : MonoBehaviour
     }
 
 	private void setUpGame() {
+		Time.timeScale = 1.0f;
+		m_Paused = false;
+
 		m_HitGameOver = false;
 		m_wasPopulated = false;
         m_timeSurvived = 0.0f;
