@@ -64,9 +64,7 @@ public class MeteorDisaster : BaseDisaster {
 		m_grabbed = false;
 	}
 
-	private Vector2 getWorldPosOfMouse() {
-		return Camera.main.ScreenToWorldPoint(Input.mousePosition);
-	}
+
 
 	private void flingMeteor(float a_Speed) {
 		m_rigidBody.velocity = Vector3.zero;

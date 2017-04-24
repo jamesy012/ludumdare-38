@@ -109,6 +109,9 @@ public class BaseDisaster : MonoBehaviour
 		//also might want to convert to world coord instead of screen coord?
 		return Input.mousePosition;
 	}
-    
+
+	protected Vector2 getWorldPosOfMouse() {
+		return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+	}
 
 }

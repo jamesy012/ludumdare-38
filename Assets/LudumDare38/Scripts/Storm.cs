@@ -8,20 +8,34 @@ public class Storm : Clouds
 
     public float m_deathHeightOffset = 0.5f;
     private float m_heightRisen = 0.0f;
+	private float m_StartHeight;
 
+
+	//lightning
 	public float m_HitCooldown = 4;
 	private float m_LastHit;
-
 	public GameObject m_LightingBolt;
-
-	private float m_StartHeight;
 
 	[Range(0,1000)]
 	public float m_RandomChanceToSpawnLightning = 0.1f;
 
+	//flicking
 
-    // Use this for initialization
-    protected override void Start()
+	private float m_ClickTime = 0;
+	public float m_MaxHoldTime = 0.3f;
+
+	private Vector2 m_ClickPos;
+	private bool m_HasBeenFlicked = false;
+	/// <summary>
+	/// treat as Vector2
+	/// </summary>
+	private Vector3 m_FlickDirection;
+
+	//start
+
+
+	// Use this for initialization
+	protected override void Start()
     {
 		base.Start();
 
@@ -45,24 +59,51 @@ public class Storm : Clouds
 			}
 		}
 
-        //if dragged outwards from planet
-        /*&& m_CurrDistToPlanetPos > m_OldDistToPlanetPos && m_OldDistToPlanetPos != 0.0f*/
-        if (m_grabbed )
-        {
-            
-            this.transform.Translate(Vector3.up  * Time.deltaTime);
-            m_heightRisen += 1 * Time.deltaTime;
-        }
-
-        //if passed death threshold self destroy
-        if (m_heightRisen >= m_deathHeightOffset)
-        {
-            SelfDestruct();
-        }
+		//if dragged outwards from planet
+		if (m_HasBeenFlicked) {
+			Vector3 pos = transform.position;
+			pos += m_FlickDirection * Time.deltaTime;
+			transform.position = pos;
+		} else {
+			if (m_grabbed) {
+				//limit amount of time for click
+				if (Time.time > m_ClickTime + m_MaxHoldTime) {
+					m_ClickTime = Time.time - m_MaxHoldTime;//make the time calculation = 0
+					checkIfFlick();
+				}
+			}
+		}
     }
 
+	protected override void clicked() {
+		base.clicked();
+		m_ClickTime = Time.time;
+		m_ClickPos = getWorldPosOfMouse();
+	}
 
-    private void LightningBolt()
+	public void OnMouseExit() {
+		if (m_grabbed) {
+
+			checkIfFlick();
+		}
+	}
+
+	private void checkIfFlick() {
+		Vector2 mousePos = getWorldPosOfMouse();
+
+		float startToCenter = Vector3.Distance(m_ClickPos, Vector3.zero);
+		float endToCenter = Vector3.Distance(mousePos, Vector3.zero);
+
+		if(endToCenter > startToCenter) {
+			m_FlickDirection = mousePos - m_ClickPos;
+			m_FlickDirection.z = 0;
+			m_HasBeenFlicked = true;
+			gameObject.AddComponent<FadeOutDestroy>();
+		}
+	}
+
+
+	private void LightningBolt()
     {
 		m_LastHit = Time.time;
 
