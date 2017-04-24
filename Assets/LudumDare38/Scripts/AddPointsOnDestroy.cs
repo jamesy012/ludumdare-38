@@ -20,6 +20,9 @@ public class AddPointsOnDestroy : MonoBehaviour
 
     private void OnDestroy()
     {
+		if(m_gameManager == null) {
+			return;
+		}
         m_gameManager.addScore(m_scoreAdded);
     }
 }

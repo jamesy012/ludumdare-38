@@ -18,7 +18,12 @@ public class MeteorDisaster : BaseDisaster {
 
 	private Rigidbody m_rigidBody;
 
+	private AddPointsOnDestroy m_Apod;
+
 	private void Start() {
+		m_Apod = GetComponent<AddPointsOnDestroy>();
+		m_Apod.enabled = false;
+
 		m_rigidBody = this.GetComponent<Rigidbody>();
 
 		Vector2 startForce;
@@ -94,7 +99,6 @@ public class MeteorDisaster : BaseDisaster {
 	}
 
 	public void OnCollisionEnter(Collision collision) {
-		////todo spwan particles or do something else during collision
 		if (collision.transform.tag == "Meteor") {
 			SelfDestruct();
 		}
@@ -106,6 +110,7 @@ public class MeteorDisaster : BaseDisaster {
 	}
 
 	protected override void SelfDestruct() {
+		m_Apod.enabled = true;
 		Destroy(this);
 		gameObject.AddComponent<DecreaseSizeDestroy>();
 		Instantiate(m_explosionPrefab, this.transform.position, Quaternion.identity);
