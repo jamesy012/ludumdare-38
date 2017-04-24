@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
     }
 
 	public void startGame() {
+
         
 		print("Game Start");
 		toggleObjects();
@@ -108,8 +109,8 @@ public class GameManager : MonoBehaviour
 		m_HitGameOver = false;
 		m_wasPopulated = false;
         m_timeSurvived = 0.0f;
-
-		if (!m_Muted) {
+        m_score = 0;
+        if (!m_Muted) {
 			m_RandomSongSelection.pickRandomSong();
 		}
 

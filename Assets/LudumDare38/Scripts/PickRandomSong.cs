@@ -22,10 +22,11 @@ public class PickRandomSong : MonoBehaviour {
 	}
 
 	public void Update() {
-		//if (!m_As.isPlaying) {
-		//	pickRandomSong();
-		//}
-	}
+        //if (!m_As.isPlaying)
+        //{
+        //    pickRandomSong();
+        //}
+    }
 
 	public void pickRandomSong() {
 		m_As.Stop();
