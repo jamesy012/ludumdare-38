@@ -5,9 +5,11 @@ using UnityEngine;
 public class InhabitantBehavior : MonoBehaviour {
 
 	public float m_walkSpeed = 5.0f;
-	/// <summary>
-	/// how much speed will be randomly taken or added 
-	/// </summary>
+    /// <summary>
+    /// how much speed will be randomly taken or added 
+    /// </summary>
+    /// 
+    public GameObject m_bloodsplosion;
 	public float m_WalkSpeedDeviation = 2.5f;
 
 	private bool m_MoveRight = true;
@@ -66,7 +68,8 @@ public class InhabitantBehavior : MonoBehaviour {
 	public void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag("Disaster")) {
 				GameObject.Destroy(this.gameObject);
-		}
+             Instantiate(m_bloodsplosion, this.transform.position, Quaternion.identity);
+        }
 	}
 
 	private void OnCollisionEnter(Collision collision) {
@@ -74,7 +77,8 @@ public class InhabitantBehavior : MonoBehaviour {
 		if (collision.gameObject.CompareTag("Disaster")) {
 			print("zz");
 			GameObject.Destroy(this.gameObject);
-		}
+            Instantiate(m_bloodsplosion, this.transform.position, Quaternion.identity);
+        }
 	}
 
 
