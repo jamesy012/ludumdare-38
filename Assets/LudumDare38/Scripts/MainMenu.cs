@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+
+	public GameObject[] m_CreditsToggle;
     
     public void Play()
     {
@@ -18,7 +20,9 @@ public class MainMenu : MonoBehaviour
 
     public void Credits()
     {
-
+		for(int i = 0; i < m_CreditsToggle.Length; i++) {
+			m_CreditsToggle[i].SetActive(!m_CreditsToggle[i].activeInHierarchy);
+		}
     }
 
     public void Exit()
