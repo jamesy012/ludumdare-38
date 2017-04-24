@@ -12,11 +12,15 @@ public class InhabitantBehavior : MonoBehaviour {
 
 	private bool m_MoveRight = true;
 
+	private float m_StandStillTimer;
+
 	/// <summary>
 	/// every frame out of 1000, will check if the inhabitant should change direction
 	/// </summary>
-	[Range(0,1000)]
-	public float m_ChanceToChangeDirection = 0.1f;
+	[Range(0, 1000)]
+	public float m_ChanceToChangeDirection = 1f;
+	[Range(0, 1000)]
+	public float m_ChanceToStandStill = 2f;
 
 	// Use this for initialization
 	void Start() {
@@ -30,12 +34,21 @@ public class InhabitantBehavior : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		Walk();
-
-		//random chance to change direction
-		if (Random.Range(0, 1000) <= m_ChanceToChangeDirection) {
-			m_MoveRight = !m_MoveRight;
+		if (m_StandStillTimer > 0) {
+			Walk();
+			//random chance to change direction
+			if (Random.Range(0, 1000) <= m_ChanceToChangeDirection) {
+				m_MoveRight = !m_MoveRight;
+			}
+		} else {
+			if (Random.Range(0, 1000) <= m_ChanceToStandStill) {
+				m_StandStillTimer = Random.Range(0.0f, 5.0f);
+			}
 		}
+
+
+
+
 
 	}
 
