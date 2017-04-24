@@ -46,6 +46,13 @@ public class GameManager : MonoBehaviour
 
 		m_RandomSongSelection = transform.GetComponentInChildren<PickRandomSong>();
 
+		if (m_Muted) {
+			AudioSource audio = transform.GetComponentInChildren<AudioSource>();
+			if (audio != null) {
+				audio.Pause();
+			}
+		}
+
 		setUpGame();
 	}
 
