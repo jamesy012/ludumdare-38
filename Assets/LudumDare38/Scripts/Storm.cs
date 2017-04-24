@@ -40,7 +40,7 @@ public class Storm : Clouds
 		base.Start();
 
 		//start cooldown from spawn time
-		m_LastHit = Time.time;
+		//m_LastHit = Time.time;
 
 		m_StartHeight = getHeight();
 	}
