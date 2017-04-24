@@ -10,23 +10,30 @@ public class Volcano : BaseDisaster
     public float m_eruptionForce = 100.0f;
     public float m_eruptionPointOffset = 0.5f;
     public float m_deathHeightOffset = 0.05f;
+    
     public uint m_numOfRocks = 1;
     private Vector3 eruptPosition;
-
+    private float m_eruptHeight = 0.0f;
+    private float m_currHeight = 0.0f;
+    private bool m_risen = false;
     private float m_heightSunk = 0.0f;
 
     // Use this for initialization
     void Start()
     {
+        m_eruptHeight = Vector3.Distance(Vector3.zero, this.transform.position);
+        //push down
+        this.transform.position = Vector3.down * m_deathHeightOffset;
     }
 
     // Update is called once per frame
     void Update()
     {
         eruptPosition = this.transform.position + this.transform.up * m_eruptionPointOffset;
-        m_timer += Time.deltaTime;
 
-        if(m_timer >= m_eruptInterval)
+        m_currHeight = Vector3.Distance(Vector3.zero, this.transform.position);
+
+        if (m_timer >= m_eruptInterval)
         {
   
             Erupt();
@@ -37,9 +44,16 @@ public class Volcano : BaseDisaster
         /*&& m_CurrDistToPlanetPos < m_OldDistToPlanetPos && m_CurrDistToPlanetPos != 0.0f*/
         if (m_grabbed)
         {
-           
-            this.transform.Translate(-Vector3.up  * Time.deltaTime);
-            m_heightSunk += 1 * Time.deltaTime;
+
+            SquashDown();
+        }
+        else
+        {
+          
+            RiseUp();
+            
+            
+            m_timer += Time.deltaTime;
         }
 
         //if passed death threshold self destroy
@@ -71,6 +85,32 @@ public class Volcano : BaseDisaster
 
     }
 
+    private void RiseUp()
+    {
+        if(m_currHeight <= m_eruptHeight)
+        {
+            this.transform.Translate(Vector3.up * Time.deltaTime);
+            if (m_risen)
+            {
+
+                m_heightSunk -= Time.deltaTime;
+            }
+            
+        }
+        else
+        {
+            m_risen = true;
+        }
+       
+
+        
+    }
+
+    private void SquashDown()
+    {
+        this.transform.Translate(-Vector3.up * Time.deltaTime);
+        m_heightSunk += 1 * Time.deltaTime;
+    }
 
 
 
