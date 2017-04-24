@@ -16,6 +16,9 @@ public class Storm : Clouds
 
 	private float m_StartHeight;
 
+	[Range(0,1000)]
+	public float m_RandomChanceToSpawnLightning = 0.1f;
+
 
     // Use this for initialization
     protected override void Start()
@@ -34,7 +37,12 @@ public class Storm : Clouds
 		Orbit();
 		moveUpDown();     
 		if (Time.time > m_LastHit + m_HitCooldown) {
-			InhabitantCheck();
+
+			if (Random.Range(0, 1000) <= m_RandomChanceToSpawnLightning) {
+				LightningBolt();
+			} else {//else do the normal check
+				InhabitantCheck();
+			}
 		}
 
         //if dragged outwards from planet

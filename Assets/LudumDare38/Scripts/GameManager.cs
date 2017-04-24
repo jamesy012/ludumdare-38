@@ -96,7 +96,10 @@ public class GameManager : MonoBehaviour
 		m_HitGameOver = false;
 		m_wasPopulated = false;
         m_timeSurvived = 0.0f;
-        m_RandomSongSelection.pickRandomSong();
+
+		if (!m_Muted) {
+			m_RandomSongSelection.pickRandomSong();
+		}
 
 		for (int i = 0; i < m_InhabiantTransform.childCount; i++) {
 			Transform child = m_InhabiantTransform.GetChild(i);
